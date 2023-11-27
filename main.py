@@ -87,6 +87,7 @@ if RunWithDefaultConfig is False:
     keyboard.unhook_all()  # Désenregistrement de la fonction de gestion des événements après le script
     if SpamScriptBroke is True:
         print("Vous avez interrompu le script.")
+        time.sleep(3)
 
 # Exécution du script avec les paramètres par défaut
 elif RunWithDefaultConfig:
@@ -101,3 +102,4 @@ elif RunWithDefaultConfig:
     keyboard.unhook_all()  # Désenregistrement de la fonction de gestion des événements après le script
     if SpamScriptBroke is True:
         print("Vous avez interrompu le script.")
+        time.sleep(3)
