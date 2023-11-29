@@ -69,7 +69,7 @@ while True:
     elif Default == "n":
         ProgrammerEnvoi = False
         print("Au revoir.")
-        time.sleep(3)
+        input("Faites Entrée pour fermer...")
         quit()
     else:
         print("La valeur entrée ne correspond pas.")
@@ -112,7 +112,7 @@ if not ProgrammerEnvoi:
 
     if SpamScriptBroke:
         print("Vous avez interrompu le script.")
-        time.sleep(3)
+        input("Faites Entrée pour fermer...")
 
 # Exécution du script avec les paramètres par défaut
 elif ProgrammerEnvoi:
@@ -124,4 +124,4 @@ elif ProgrammerEnvoi:
 
     if SpamScriptBroke:
         print("Vous avez interrompu le script.")
-        time.sleep(3)
+        input("Faites Entrée pour fermer...")
