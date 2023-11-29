@@ -2,7 +2,10 @@ import pyautogui as muz
 import time
 import keyboard
 
-TimeStamp=1701161843
+# Initialisation de quelques variables primordiales
+Temps = None
+TempsInTimeStamp = None
+
 # Initialisation de la variable SpamScriptBroke
 SpamScriptBroke = False
 
@@ -36,70 +39,88 @@ def SpamScript(Iteration, Nombre):
         muz.press('Enter')
         Nombre += 1
 
+def TempsIntoTimeStamp(Temps):
+    return Temps * 60
+
+def minutor(TempsInTimeStamp):
+    Depart = int(time.time())
+
+    while True:
+        Hour = int(time.time())
+        T2 = Hour - Depart
+
+        if T2 >= TempsInTimeStamp:
+            RunWithDefaultConfig = True
+            return RunWithDefaultConfig  # Cette ligne est suffisante pour retourner la valeur et sortir de la fonction
+        time.sleep(1)
+
 # Point d'entrée du script
 print("Placez le curseur dans le bon emplacement dans le logiciel où vous voulez spam.")
 time.sleep(0.5)
-print("Sachez que le logiciel ayant été développé en duspee, Soyez indulgents s'il-vous-please.")
+print("Sachez que le logiciel ayant été développé en duspee, soyez indulgents s'il-vous-please.")
 
-# Demande à l'utilisateur d'utiliser les paramètres par défaut ou non
-Defaulft = input("Utilisez le script ? (y/n): ").lower()
-
-
-
-# Validation de la réponse de l'utilisateur
 while True:
-    if Defaulft == "y":
-        RunWithDefaultConfig = True
+    # Demande à l'utilisateur d'utiliser le programme
+    Default = input("Utilisez le script ? (y/n): ").lower()
+    if Default == "y":
+        ProgrammerEnvoi = True
         break
-    elif Defaulft == "n":
-        RunWithDefaultConfig = False
+    elif Default == "n":
+        ProgrammerEnvoi = False
         print("Au revoir.")
         time.sleep(3)
         quit()
     else:
         print("La valeur entrée ne correspond pas.")
 
-
-print("Voulez-vous programmer l'envoi des messages à 28/11/2023 9:57:23 ?")
+print("Voulez-vous programmer l'envoi des messages ?")
 print("Si vous ne voulez pas, le spam sera instantané. ")
 print("Vous pourrez l'arrêter à tout moment en appuyant sur Echap.")
+
+# Validation de la réponse de l'utilisateur au sujet de la programmation du spam
 while True:
-    ProgramToMardi=input("(y/n): ")
+    ProgramToMardi = input("(y/n): ")
     if ProgramToMardi == "y":
-        RunWithDefaultConfig = True
+        ProgrammerEnvoi = True
         break
     elif ProgramToMardi == "n":
-        RunWithDefaultConfig = False
+        ProgrammerEnvoi = False
         break
     else:
         print("La valeur entrée ne correspond pas.")
 
+if ProgrammerEnvoi:
+    while True:
+        try:
+            Temps = int(input("Entrez le nombre de minutes avant de spam (il doit s'agir d'un entier) : "))
+            TempsInTimeStamp = TempsIntoTimeStamp(Temps)
+            break
+        except ValueError:
+            print("Une erreur est survenue. Assurez-vous d'entrer un nombre entier.")
 
-Iterations = int(input("Veuillez indiquez le nombre d'envoi de message : "))
+Iterations = int(input("Veuillez indiquer le nombre d'envoi de message : "))
 Nombre = 1
 
 # Exécution du script avec les paramètres choisis
-if RunWithDefaultConfig is False:
+if not ProgrammerEnvoi:
     print("Vous avez 2 secondes pour retourner sur le bon logiciel.")
     time.sleep(2)
-    keyboard.hook(BrokeRun)  # Enregistrement de la fonction de gestion des événements pour la touche 'x'
+    keyboard.hook(BrokeRun)  # Enregistrement de la fonction de gestion des événements pour la touche 'Esc'
     SpamScript(Iterations, Nombre)
     keyboard.unhook_all()  # Désenregistrement de la fonction de gestion des événements après le script
-    if SpamScriptBroke is True:
+
+    if SpamScriptBroke:
         print("Vous avez interrompu le script.")
         time.sleep(3)
 
 # Exécution du script avec les paramètres par défaut
-elif RunWithDefaultConfig:
-    print("L'éxécution du script aura bien lieu le 28/11/2023 9:57:23.")
-    while True:
-        Hour = int(time.time())
-        if Hour>=TimeStamp:
-            break
-        time.sleep(1)
-    keyboard.hook(BrokeRun)  # Enregistrement de la fonction de gestion des événements pour la touche 'x'
+elif ProgrammerEnvoi:
+    print("L'exécution du script aura bien lieu dans", str(Temps), "minute(s).")
+    minutor(TempsInTimeStamp)
+    keyboard.hook(BrokeRun)  # Enregistrement de la fonction de gestion des événements pour la touche 'Esc'
     SpamScript(Iterations, Nombre)
     keyboard.unhook_all()  # Désenregistrement de la fonction de gestion des événements après le script
-    if SpamScriptBroke is True:
+
+    if SpamScriptBroke:
         print("Vous avez interrompu le script.")
         time.sleep(3)
