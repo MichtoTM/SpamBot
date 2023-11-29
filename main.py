@@ -2,6 +2,7 @@ import pyautogui as muz
 import time
 import keyboard
 
+
 # Initialisation de quelques variables primordiales
 Temps = None
 TempsInTimeStamp = None
