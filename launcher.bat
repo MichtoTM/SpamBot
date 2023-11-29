@@ -6,3 +6,4 @@ pip install pyautogui
 pip install keyboard
 echo Successful Installed
 echo Delete this file please.
+pause
