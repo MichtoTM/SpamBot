@@ -6,9 +6,17 @@ import keyboard
 # Initialisation de quelques variables primordiales
 Temps = None
 TempsInTimeStamp = None
+Nombre = 0
+
 
 # Initialisation de la variable SpamScriptBroke
 SpamScriptBroke = False
+
+#Fonction de déboguage
+def getAndShowSpeed(Nombre,Finsish,Start):
+    TimeElasped=Finish-Start
+    SpeedVariable=Nombre/TimeElasped
+    print("Le script à envoyé ",Nombre," en ",TimeElasped," seconde(s) soit :",SpeedVariable," message(s)/secondes.")
 
 # Fonction de coupure d'urgence appelée lorsqu'une touche est pressée
 def BrokeRun(e):
@@ -17,13 +25,14 @@ def BrokeRun(e):
         print("Touche Echap pressée.")
         SpamScriptBroke = True
 
+
 # Fonction pour le script de spam
 def SpamScript(Iteration, Nombre):
     for i in range(Iteration):
         if SpamScriptBroke is True:
             print("Le script a été interrompu.")
             break
-
+        Nombre += 1
         muz.keyDown("ctrl")
         time.sleep(0.001)
         muz.keyDown("v")
@@ -38,10 +47,13 @@ def SpamScript(Iteration, Nombre):
         muz.typewrite(str(Nombre))
 
         muz.press('Enter')
-        Nombre += 1
+
+    return Nombre
+
 
 def TempsIntoTimeStamp(Temps):
     return Temps * 60
+
 
 def minutor(TempsInTimeStamp):
     Depart = int(time.time())
@@ -74,9 +86,11 @@ while True:
     else:
         print("La valeur entrée ne correspond pas.")
 
+
 print("Voulez-vous programmer l'envoi des messages ?")
 print("Si vous ne voulez pas, le spam sera instantané. ")
 print("Vous pourrez l'arrêter à tout moment en appuyant sur Echap.")
+
 
 # Validation de la réponse de l'utilisateur au sujet de la programmation du spam
 while True:
@@ -100,14 +114,16 @@ if ProgrammerEnvoi:
             print("Une erreur est survenue. Assurez-vous d'entrer un nombre entier.")
 
 Iterations = int(input("Veuillez indiquer le nombre d'envoi de message : "))
-Nombre = 1
+
 
 # Exécution du script avec les paramètres choisis
 if not ProgrammerEnvoi:
     print("Vous avez 2 secondes pour retourner sur le bon logiciel.")
     time.sleep(2)
     keyboard.hook(BrokeRun)  # Enregistrement de la fonction de gestion des événements pour la touche 'Esc'
-    SpamScript(Iterations, Nombre)
+    Start=time.time()
+    Nombre=SpamScript(Iterations, Nombre)
+    Finish=time.time()
     keyboard.unhook_all()  # Désenregistrement de la fonction de gestion des événements après le script
 
     if SpamScriptBroke:
@@ -119,9 +135,15 @@ elif ProgrammerEnvoi:
     print("L'exécution du script aura bien lieu dans", str(Temps), "minute(s).")
     minutor(TempsInTimeStamp)
     keyboard.hook(BrokeRun)  # Enregistrement de la fonction de gestion des événements pour la touche 'Esc'
-    SpamScript(Iterations, Nombre)
+    Start=time.time()
+    Nombre=SpamScript(Iterations, Nombre)
+    Finish=time.time()
     keyboard.unhook_all()  # Désenregistrement de la fonction de gestion des événements après le script
 
     if SpamScriptBroke:
         print("Vous avez interrompu le script.")
         input("Faites Entrée pour fermer...")
+
+
+print("")
+getAndShowSpeed(Nombre,Finish,Start)
